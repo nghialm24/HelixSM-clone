@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CountChild : MonoBehaviour
+public class Destroy : MonoBehaviour
 {
     GameObject sphere;
 
@@ -26,17 +26,18 @@ public class CountChild : MonoBehaviour
     {
         if (transform.position.x != 0 || transform.position.y >= sphere.transform.position.y)
         {
-            if (180 < rotY && rotY <= 360)
-            {
+            //if (180 < rotY && rotY <= 360)
+            //{
                 Vector3 targetPoint = transform.position + breakLeft;
                 gameObject.transform.position = Vector3.MoveTowards(transform.position, targetPoint, 50 * Time.deltaTime);
-            }
-            else
-            {
-                Vector3 targetPoint2 = transform.position + breakRight;
-                gameObject.transform.position = Vector3.MoveTowards(transform.position, targetPoint2, 50 * Time.deltaTime);
-            }
-            Destroy(gameObject, 2f);
+            //}
+            //else
+            //{
+            //    Vector3 targetPoint2 = transform.position + breakRight;
+            //    gameObject.transform.position = Vector3.MoveTowards(transform.position, targetPoint2, 50 * Time.deltaTime);
+            //}
+            Destroy(gameObject, 2);
         }
+        
     }
 }
