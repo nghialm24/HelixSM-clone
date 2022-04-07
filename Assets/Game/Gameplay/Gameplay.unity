@@ -1610,8 +1610,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   helixRings:
   - {fileID: 1752515479477321377, guid: 7c12d135b50c6e846b398e66c079a338, type: 3}
+  - {fileID: 6537411202339163604, guid: 182d1628ac4d10d45a0e477cc521a587, type: 3}
+  - {fileID: 7578928246560302412, guid: e5ed06e5390cf5345a0feb0df835c8eb, type: 3}
+  - {fileID: 3831598421887516431, guid: 0529282d52039654ab4b2b6685c88e53, type: 3}
   backGround:
+  - {fileID: 7192289834834355222}
   - {fileID: 1711812598}
+  - {fileID: 1219029152}
+  - {fileID: 784419649}
 --- !u!4 &1263049537
 Transform:
   m_ObjectHideFlags: 0
@@ -2805,7 +2811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f21d587a9edc034187da524453460e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  breakring: 0
+  posY: 100
   gameOverUI: {fileID: 1697411988}
   nextLevelUI: {fileID: 1855186516}
   fury: {fileID: 1253141189606171}
@@ -2815,8 +2821,8 @@ MonoBehaviour:
   imageFuryUp: {fileID: 420195804}
   FuryTimeDown: 4
   FuryTimeUp: 0
-  rotY: 0
   firstDown: 1
+  rotY: 0
 --- !u!54 &2105091700
 Rigidbody:
   m_ObjectHideFlags: 0
