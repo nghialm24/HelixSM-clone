@@ -1609,7 +1609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   helixRings:
-  - {fileID: 3824953135516467634, guid: 7c12d135b50c6e846b398e66c079a338, type: 3}
+  - {fileID: 1752515479477321377, guid: 7c12d135b50c6e846b398e66c079a338, type: 3}
   backGround:
   - {fileID: 1711812598}
 --- !u!4 &1263049537
@@ -2805,6 +2805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f21d587a9edc034187da524453460e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  breakring: 0
   gameOverUI: {fileID: 1697411988}
   nextLevelUI: {fileID: 1855186516}
   fury: {fileID: 1253141189606171}

@@ -18,7 +18,7 @@ public class HelixManager : MonoBehaviour
 
     public void SpawnRing()
     {
-        int index = Random.Range(0, helixRings.Length - 1);
+        int index = Random.Range(0, helixRings.Length);
         Instantiate(helixRings[index], transform.up + ySpawn, Quaternion.identity);
         backGround[index].gameObject.SetActive(true);
     }

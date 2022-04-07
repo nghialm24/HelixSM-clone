@@ -13,18 +13,18 @@ public class SphereManager : MonoBehaviour
     GameObject sphere;
 
     private Vector3 velocity = new Vector3(0f, 0f, 0f);
-    private Vector3 breakLeft = new Vector3(-30f, 0f, 0f);
-    private Vector3 breakRight = new Vector3(30f, 0f, 0f);
     private float speed = 2f;
     private bool press = false;
     private bool check = false;
     private bool pressStatus = true;
+    public float posY = 100;
 
     [Header("Game Over Requirements")]
     [SerializeField] GameObject gameOverUI;
     [SerializeField] GameObject nextLevelUI;
     [SerializeField] GameObject fury;
     [SerializeField] GameObject breakObject;
+
 
     [SerializeField] static int currentLevelIndex;
     [SerializeField] TextMeshProUGUI currentLevelText;
@@ -33,9 +33,10 @@ public class SphereManager : MonoBehaviour
     [SerializeField] Image imageFuryUp;
     [SerializeField] float FuryTimeDown = 4;
     [SerializeField] float FuryTimeUp = 0;
-    [SerializeField] float rotY;
     [SerializeField] float firstDown = 1;
-    
+    [SerializeField] float rotY;
+
+
 
     private void Start()
     {
@@ -75,6 +76,7 @@ public class SphereManager : MonoBehaviour
                 break;
             case State.Play:
                 Play();
+                //velocity.y = -30f;
                 if (FuryTimeUp >= 2) ChangeState(State.Fury);
                 if (!Input.GetMouseButton(0) || !pressStatus) ChangeState(State.Idle);
                 break;
@@ -83,6 +85,7 @@ public class SphereManager : MonoBehaviour
                 if (FuryTimeDown <= 0 || !Input.GetMouseButton(0)) ChangeState(State.Idle);
                 break;
             case State.Win:
+                Win();
                 break;
             case State.Lose:
                 break;
@@ -152,16 +155,19 @@ public class SphereManager : MonoBehaviour
             if (other.gameObject.tag == "Lastring")
             {
                 velocity.y = 30f;
-                pressStatus = false;
-                nextLevelUI.SetActive(true);
-                PlayerPrefs.SetInt("CurrentLevelIndex", currentLevelIndex + 1);
-                LoadScene();
+                ChangeState(State.Win);
             }
             else
             {
                 if (fury.activeSelf)
                 {
-                    Destroy(other.gameObject);
+                    if (other.gameObject.tag == "Lastring")
+                    {
+                        velocity.y = 30f;
+                        ChangeState(State.Win);
+                    }
+                    posY = other.transform.position.y;
+                    firstDown = 1;
                     press = false;
                 }
                 else
@@ -182,6 +188,7 @@ public class SphereManager : MonoBehaviour
                             press = false;
                             if (firstDown < 0)
                             {
+                                imageFuryUp.enabled = false;
                                 PlayerPrefs.SetInt("CurrentLevelIndex", 1);
                                 gameOverUI.SetActive(true);
                                 Instantiate(breakObject, sphere.transform.position, sphere.transform.rotation);
@@ -191,24 +198,8 @@ public class SphereManager : MonoBehaviour
                     }
                     else
                     {
+                        posY = other.transform.position.y;
                         firstDown = 1;
-                        Debug.Log(other);
-                        //rotY = other.transform.eulerAngles.y + other.transform.parent.eulerAngles.y;
-                        //if (rotY >= 360)
-                        //{
-                        //    rotY -= 360;
-                        //}
-                        //if (180 < rotY && rotY <= 360)
-                        //{
-                        Vector3 targetPoint = other.transform.position + breakLeft;
-                            other.transform.position = Vector3.MoveTowards(other.transform.position, targetPoint, 50 * Time.deltaTime);
-                        //}
-                        //else
-                        //{
-                        //    Vector3 targetPoint2 = other.transform.position + breakRight;
-                        //    other.transform.position = Vector3.MoveTowards(other.transform.position, targetPoint2, 50 * Time.deltaTime);
-                        //}
-
                         press = false;
                     }
                 }
@@ -264,6 +255,17 @@ public class SphereManager : MonoBehaviour
         press = true;
         velocity.y = -30f;
     } 
+
+    internal void Win()
+    {
+        Idle();
+        press = false;
+        imageFuryUp.enabled = false;
+        pressStatus = false;
+        nextLevelUI.SetActive(true);
+        PlayerPrefs.SetInt("CurrentLevelIndex", currentLevelIndex + 1);
+        LoadScene();
+    }
 
     private void CheckFury()
     {
