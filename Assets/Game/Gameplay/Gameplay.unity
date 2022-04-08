@@ -280,9 +280,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 174005134}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d3fbf3a5fceec248a5ad6a5689ec294, type: 3}
+  m_Script: {fileID: 11500000, guid: 17bd8db1103ef1c4695e8f5a0990e8e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 2105091694}
+  gameOverUI: {fileID: 1697411988}
+  nextLevelUI: {fileID: 1855186516}
+  CountDownTimeText: {fileID: 1875069253}
+  image: {fileID: 504427715}
+  CountDownTime: 5
 --- !u!114 &174005137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,7 +334,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 174005136}
-        m_TargetAssemblyTypeName: NextLevel, Assembly-CSharp
+        m_TargetAssemblyTypeName: GamePlayController, Assembly-CSharp
         m_MethodName: BtnTaptonext
         m_Mode: 1
         m_Arguments:
@@ -1681,9 +1687,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1325391144}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9ef9a8d822c8e4409297cd8a4c5bd2e, type: 3}
+  m_Script: {fileID: 11500000, guid: 17bd8db1103ef1c4695e8f5a0990e8e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 2105091694}
+  gameOverUI: {fileID: 1697411988}
+  nextLevelUI: {fileID: 1855186516}
+  CountDownTimeText: {fileID: 1875069253}
+  image: {fileID: 504427715}
+  CountDownTime: 5
 --- !u!114 &1325391147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1729,7 +1741,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1325391146}
-        m_TargetAssemblyTypeName: Retry, Assembly-CSharp
+        m_TargetAssemblyTypeName: GamePlayController, Assembly-CSharp
         m_MethodName: BtnRetry
         m_Mode: 1
         m_Arguments:
@@ -2045,7 +2057,6 @@ GameObject:
   - component: {fileID: 1697411991}
   - component: {fileID: 1697411990}
   - component: {fileID: 1697411989}
-  - component: {fileID: 1697411993}
   m_Layer: 5
   m_Name: UIGameOver
   m_TagString: Untagged
@@ -2138,18 +2149,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1697411993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697411988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e05dc6caba0973944a7ad635204388f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1711812596
 GameObject:
   m_ObjectHideFlags: 0
@@ -2235,6 +2234,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1715873668}
   - component: {fileID: 1715873667}
+  - component: {fileID: 1715873669}
   m_Layer: 0
   m_Name: Gameplay
   m_TagString: Untagged
@@ -2254,7 +2254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c5388c2204e37544bcc7e2a1b798903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aliveAfterClose: 0
 --- !u!4 &1715873668
 Transform:
   m_ObjectHideFlags: 0
@@ -2271,6 +2270,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1715873669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715873666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17bd8db1103ef1c4695e8f5a0990e8e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 2105091694}
+  gameOverUI: {fileID: 1697411988}
+  nextLevelUI: {fileID: 1855186516}
+  CountDownTimeText: {fileID: 1875069253}
+  image: {fileID: 504427715}
+  CountDownTime: 5
 --- !u!1 &1836739792
 GameObject:
   m_ObjectHideFlags: 0
@@ -2482,7 +2499,6 @@ GameObject:
   - component: {fileID: 1875069251}
   - component: {fileID: 1875069254}
   - component: {fileID: 1875069253}
-  - component: {fileID: 1875069252}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2509,21 +2525,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.5}
   m_SizeDelta: {x: 200, y: 51}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1875069252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1875069250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6e681e6436a81145a8ea78e3bad7b04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CountDownTimeText: {fileID: 1875069253}
-  image: {fileID: 504427715}
-  CountDownTime: 5
 --- !u!114 &1875069253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2633,7 +2634,7 @@ GameObject:
   - component: {fileID: 2087183984}
   - component: {fileID: 2087183983}
   m_Layer: 5
-  m_Name: GameOver
+  m_Name: Complete
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2730,7 +2731,7 @@ Transform:
   m_GameObject: {fileID: 2105091694}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -5.5, z: 46.3}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 2.2, y: 2.2, z: 2.2}
   m_Children:
   - {fileID: 4521405602681905}
   - {fileID: 333513481}
@@ -2812,8 +2813,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   posY: 100
-  gameOverUI: {fileID: 1697411988}
-  nextLevelUI: {fileID: 1855186516}
+  win: 0
+  lose: 0
   fury: {fileID: 1253141189606171}
   breakObject: {fileID: 3419256375162209712, guid: e2b257a9ae2059e4dabebf6df71e4bb0, type: 3}
   currentLevelText: {fileID: 818496562}
@@ -2822,7 +2823,7 @@ MonoBehaviour:
   FuryTimeDown: 4
   FuryTimeUp: 0
   firstDown: 1
-  rotY: 0
+  _state: 0
 --- !u!54 &2105091700
 Rigidbody:
   m_ObjectHideFlags: 0

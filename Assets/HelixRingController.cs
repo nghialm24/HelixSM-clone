@@ -7,15 +7,15 @@ public class HelixRingController : MonoBehaviour
     GameObject sphere;
     private Vector3 breakLeft = new Vector3(-30f, 0f, 0f);
     private Vector3 breakRight = new Vector3(30f, 0f, 0f);
-    public SphereManager isbreaking;
+    public PlayerController isbreaking;
     [SerializeField] float rotY;
 
     private void Start()
     {
         sphere = GameObject.Find("Sphere");
-        isbreaking = sphere.GetComponent<SphereManager>();
+        isbreaking = sphere.GetComponent<PlayerController>();
     }
-    private void FixedUpdate()
+    private void Update()
     {
         rotY = transform.eulerAngles.y;
         if (isbreaking.posY == transform.position.y || transform.position.x != 0 || transform.position.y >= sphere.transform.position.y)

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 
 
-public class SphereManager : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {   
     protected Rigidbody rb;
 
@@ -18,13 +18,11 @@ public class SphereManager : MonoBehaviour
     private bool check = false;
     private bool pressStatus = true;
     public float posY = 100;
+    public bool win;
+    public bool lose;
 
-    [Header("Game Over Requirements")]
-    [SerializeField] GameObject gameOverUI;
-    [SerializeField] GameObject nextLevelUI;
     [SerializeField] GameObject fury;
     [SerializeField] GameObject breakObject;
-
 
     [SerializeField] static int currentLevelIndex;
     [SerializeField] TextMeshProUGUI currentLevelText;
@@ -34,21 +32,19 @@ public class SphereManager : MonoBehaviour
     [SerializeField] float FuryTimeDown = 4;
     [SerializeField] float FuryTimeUp = 0;
     [SerializeField] float firstDown = 1;
-    [SerializeField] float rotY;
-
 
 
     private void Start()
     {
-        gameOverUI.SetActive(false);
-        nextLevelUI.SetActive(false);
+            win = false;
+            lose = false;
     }
-    private enum State
+    public enum State
     {
         Idle, Fury, Play, Win, Lose
     }
 
-    private State _state = State.Idle;
+    [SerializeField] public State _state = State.Idle;
     private void Awake()
     {
         sphere = GameObject.Find("Sphere");
@@ -56,16 +52,7 @@ public class SphereManager : MonoBehaviour
         currentLevelIndex = PlayerPrefs.GetInt("CurrentLevelIndex", 1);
     }
     private void FixedUpdate()
-    {   /*
-        if (_state != State.Lose && nextLevelUI.activeSelf)
-        {
-            ChangeState(State.Win);
-            return;
-        }
-        if (gameOverUI.activeSelf)
-        {
-            ChangeState(State.Lose);
-        }*/
+    {   
         CheckFury();
         currentLevelText.text = ("LEVEL " + currentLevelIndex.ToString());
         switch (_state)
@@ -76,7 +63,6 @@ public class SphereManager : MonoBehaviour
                 break;
             case State.Play:
                 Play();
-                //velocity.y = -30f;
                 if (FuryTimeUp >= 2) ChangeState(State.Fury);
                 if (!Input.GetMouseButton(0) || !pressStatus) ChangeState(State.Idle);
                 break;
@@ -88,6 +74,7 @@ public class SphereManager : MonoBehaviour
                 Win();
                 break;
             case State.Lose:
+                Lose();
                 break;
                 //default:
                 //   throw new ArgumentOutOfRangeException();
@@ -145,7 +132,13 @@ public class SphereManager : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        sphere.gameObject.transform.localScale = new Vector3(2.75f, 2.25f, 2.5f);
+        if (_state == State.Play || _state == State.Fury)
+        {
+            sphere.gameObject.transform.localScale = new Vector3(2f, 2.2f, 2.2f);
+
+        }
+        else sphere.gameObject.transform.localScale = new Vector3(2.4f, 2f, 2.2f);
+
         if (!press)
         {
             velocity.y = 30f;
@@ -188,11 +181,7 @@ public class SphereManager : MonoBehaviour
                             press = false;
                             if (firstDown < 0)
                             {
-                                imageFuryUp.enabled = false;
-                                PlayerPrefs.SetInt("CurrentLevelIndex", 1);
-                                gameOverUI.SetActive(true);
-                                Instantiate(breakObject, sphere.transform.position, sphere.transform.rotation);
-                                gameObject.SetActive(false);
+                                ChangeState(State.Lose);
                             }
                         }
                     }
@@ -207,29 +196,17 @@ public class SphereManager : MonoBehaviour
         }
     }
 
-    internal void LoadScene()
-    {
-        StartCoroutine(DelaySceneLoad());
-    }
-
-    IEnumerator DelaySceneLoad()
-    {
-        yield return new WaitForSeconds(5f);
-        Scene scene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(scene.name);
-    }
-
     internal void Idle()
     {
         if (velocity.y < 0)
         {
             velocity.y -= speed;
-            sphere.gameObject.transform.localScale = new Vector3(2.25f, 2.5f, 2.5f);
+            sphere.gameObject.transform.localScale = new Vector3(2f, 2.2f, 2.2f);
         }
         if (velocity.y >= 0)
         {
             velocity.y -= speed;
-            sphere.gameObject.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+            sphere.gameObject.transform.localScale = new Vector3(2.2f, 2.2f, 2.2f);
         }
     }
     internal void Play()
@@ -258,13 +235,20 @@ public class SphereManager : MonoBehaviour
 
     internal void Win()
     {
+        win = true;
         Idle();
         press = false;
         imageFuryUp.enabled = false;
         pressStatus = false;
-        nextLevelUI.SetActive(true);
         PlayerPrefs.SetInt("CurrentLevelIndex", currentLevelIndex + 1);
-        LoadScene();
+    }
+
+    internal void Lose()
+    {
+        lose = true;
+        imageFuryUp.enabled = false;
+        Instantiate(breakObject, sphere.transform.position, sphere.transform.rotation);
+        gameObject.SetActive(false);
     }
 
     private void CheckFury()

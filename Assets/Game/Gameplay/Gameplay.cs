@@ -1,9 +1,12 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Funzilla
 {
-	internal class Gameplay : Scene
+	internal class Gameplay : MonoBehaviour
 	{
 		private enum State
 		{
@@ -13,10 +16,9 @@ namespace Funzilla
 			Lose
 		}
 
-		private State _state;
+		private State _state = State.Init;
 
 		internal static Gameplay Instance;
-
 		private void Init()
 		{
 			// TODO: Init game here
@@ -48,15 +50,7 @@ namespace Funzilla
 
 		private void Start()
 		{
-			
-		}
 
-		private void ChangeState(State newState)
-		{
-			if (_state == newState) return;
-			ExitOldState();
-			_state = newState;
-			EnterNewState();
 		}
 
 		private void EnterNewState()
@@ -75,7 +69,13 @@ namespace Funzilla
 					throw new ArgumentOutOfRangeException();
 			}
 		}
-
+		private void ChangeState(State newState)
+		{
+			if (newState == _state) return;
+			ExitOldState();
+			_state = newState;
+			EnterNewState();
+		}
 		private void ExitOldState()
 		{
 			switch (_state)

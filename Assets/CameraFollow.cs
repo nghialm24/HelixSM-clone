@@ -15,7 +15,7 @@ public class CameraFollow : MonoBehaviour
         min = target.position;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (target.position.y < min.y)
         {
